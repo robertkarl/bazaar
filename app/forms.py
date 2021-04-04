@@ -54,7 +54,7 @@ class CreateForm(FlaskForm):
 class BidForm(FlaskForm):
     auction_id = HiddenField()
     lot_id = HiddenField()
-    amount = IntegerField("Bid:", validators=[InputRequired(), NumberRange(min=0)])
+    amount = IntegerField("Bid:", validators=[InputRequired(), NumberRange(min=0)], default=0)
     submit_bid = SubmitField("Place Bid")
 
     def validate_amount(self, amount):
