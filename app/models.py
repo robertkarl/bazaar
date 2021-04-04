@@ -138,9 +138,13 @@ class Lot(db.Model):
         return final_bids
 
     def max_bid(self):
+        """
+        Returns the second highest bid (or the only bid for a 1-player auction).
+        """
         final_bids = self.final_bids()
+        winning_index = 1 if len(final_bids) > 1 else 0
         if final_bids:
-            return final_bids[0]
+            return final_bids[winning_index]
         else:
             return None
 

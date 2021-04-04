@@ -39,7 +39,7 @@ pip install -r requirements.txt
 5. _Bazaar_ supports custom cards. However, `cube_list.txt` must only contain real card names. To implement custom cards, ensure there is a unique "placeholder" card name in `cube_list.txt` for each custom card. Then, create a file called `custom_cards.txt` with a list of `placeholder_cardname -> custom_cardname`, one per line. Then, place images for your custom cards in the `app/static/card_images` directory. The image names must be the custom card names with all non-alphanumeric characters removed and must end in `.jpg` (e.g., `CustomCardname7.jpg`).
 ## Usage
 ### Launching Bazaar
-1. Run `FLASK_APP=app flask run`.
+1. Run `python bazaar.py`.
 2. By default, you can access _Bazaar_ on port 5000. If you are running _Bazaar_ on your computer and not a publically accessible server, you can use [ngrok][ngrok] to allow drafters to connect. It creates a web address for a given port on your computer and there are easy-to-follow instructions on its website.
 ### Running a Draft
 1. After creating an account, any user can create a draft from the `New Draft` page. They become the owner of that draft. There are a number of configurable options:  

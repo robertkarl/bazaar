@@ -1,0 +1,12 @@
+<ul class="list-unstyled">
+{% for user in users %}
+    <h3>{{ user.username }}</h3>
+    {% if user == current_user %}<b>{% endif %}
+    <ul>
+    {% for cardname in allpicks[user.username]  %}
+        <div>{{ cardname }}</div>
+    {% endfor %}
+    </ul>
+    {% if user == current_user %}</b>{% endif %}
+{% endfor %}
+</ul>

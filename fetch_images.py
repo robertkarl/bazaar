@@ -15,7 +15,6 @@ os.makedirs(imgs_dir, exist_ok=True)
 for card in cube_list:
     image_file = os.path.join(imgs_dir, f"{''.join(x for x in card if x.isalnum())}.jpg")
     if not os.path.isfile(image_file):
-        print(card)
         redir_to_image = f"https://api.scryfall.com/cards/named?fuzzy={quote(card)}&format=image&version=normal" # TODO: 404?
         image_url = urlopen(redir_to_image).geturl()
         urlretrieve(redir_to_image, image_file)

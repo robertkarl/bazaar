@@ -91,6 +91,12 @@ def create():
 def auction(auction_id):
     auction = Auction.query.filter_by(id=auction_id).first_or_404()
     users = auction.users.order_by(db.func.lower(User.username))
+    allpicks = {}
+    for user in users:
+        currlots = Lot.query.filter_by(winner=user, auction_id=auction_id).all()
+        all_cards_nested = [lot.content for lot in currlots]
+        flat = [item for subitem in all_cards_nested for item in subitem]
+        allpicks[user.username] = flat
     lot = auction.current_lot()
     if auction not in current_user.auctions:
         flash("You are not an authorized member of that auction.")
@@ -146,6 +152,10 @@ def auction(auction_id):
     bid_form = BidForm()
     bid_form.auction_id.data = auction_id
     bid_form.lot_id.data = auction.current_lot().id
+    try:
+        bid_form.validate_on_submit()
+    except:
+        return ('', 204)
     if bid_form.validate_on_submit() and bid_form.submit_bid.data:
         if bid_form.lot_id.data != auction.current_lot().id or not waiting_on:
             # Don't take bids if user wasn't looking at current lot for some
@@ -172,6 +182,7 @@ def auction(auction_id):
                            auction=auction, users=users, balances=balances,
                            lot=lot, waiting_on=waiting_on, bid_form=bid_form,
                            advance_form=advance_form,
+                           allpicks=allpicks,
                            close_bidding_form=close_bidding_form)
 
 
