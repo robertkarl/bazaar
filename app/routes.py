@@ -198,8 +198,22 @@ def picks(auction_id, username=None):
     color_sorted = sorted(all_cards, key=cube_cards.index)
     return render_template("picks.html",
                            title=f"{username}'s Auction {auction_id} picks",
-                           user=user, auction=auction, pick_sorted=all_cards,
+                           user=user, auction=auction, auction_id=auction_id, pick_sorted=all_cards,
                            color_sorted=color_sorted)
+
+@app.route("/export/<auction_id>/<username>.txt")
+@login_required
+def export(auction_id, username):
+    auction = Auction.query.filter_by(id=auction_id).first_or_404()
+    user = User.query.filter_by(username=username).first()
+    if user not in auction.users:
+        flash(f"{username} is not part of Auction {auction_id}.")
+        return redirect(url_for("picks", auction_id=auction_id))
+    all_lots = Lot.query.filter_by(winner=user, auction_id=auction_id).all()
+    all_cards_nested = [lot.content for lot in all_lots]
+    all_cards = [card for lot in all_cards_nested for card in lot]
+    import flask
+    return flask.Response("\n".join(all_cards), mimetype="text/plain")
 
 @app.route("/auction/<auction_id>/status", methods=["GET"])
 @login_required

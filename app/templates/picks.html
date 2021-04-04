@@ -10,6 +10,7 @@
             <li>
                 <a id="color-order-tab" data-toggle="pill" href="#color-order" role="tab" aria-controls="color-order" aria-selected="false">By Color</a>
             </li>
+            <li><a class="btn btn-primary" href="{{  url_for('export', auction_id=auction_id, username=user.username) }}">Export Picks</a></li>
         </ul>
         <br>
         <div class="tab-content" id="tabContent">
