@@ -1,3 +1,5 @@
+This is a fork of [Dillon Plunkett's excellent Bazaar](https://github.com/dillonplunkett/bazaar) source.
+
 <!-- omit in TOC -->
 # Bazaar
 
