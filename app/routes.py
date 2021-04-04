@@ -1,3 +1,4 @@
+import flask
 from flask import flash, jsonify, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 from flask_socketio import emit
@@ -223,7 +224,7 @@ def export(auction_id, username):
     all_lots = Lot.query.filter_by(winner=user, auction_id=auction_id).all()
     all_cards_nested = [lot.content for lot in all_lots]
     all_cards = [card for lot in all_cards_nested for card in lot]
-    import flask
+    all_cards = ["1 {}".format(card) for card in all_cards]
     return flask.Response("\n".join(all_cards), mimetype="text/plain")
 
 @app.route("/auction/<auction_id>/status", methods=["GET"])
